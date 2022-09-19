@@ -35,18 +35,29 @@ class MainActivity : AppCompatActivity() {
             // your code to perform when the user clicks on the button
             // Toast.makeText(this@MainActivity, "You clicked me.", Toast.LENGTH_SHORT).show()
 
-            val name = findViewById<EditText>(R.id.item_name).text.toString()
-            val price = findViewById<EditText>(R.id.item_price).text.toString()
-            val url = findViewById<EditText>(R.id.item_url).text.toString()
+            val name = findViewById<EditText>(R.id.item_name)
+            val price = findViewById<EditText>(R.id.item_price)
+            val url = findViewById<EditText>(R.id.item_url)
 
-            fetcher.addItem(name, price, url)
-            items = fetcher.getItems()
+            if (name.text.toString() == "" || price.text.toString() == "")
+            {
+                Toast.makeText(this@MainActivity, "Please input name and/or price!", Toast.LENGTH_SHORT).show()
+            }
+            else
+            {
+                fetcher.addItem(name.text.toString(), price.text.toString(), url.text.toString())
+                items = fetcher.getItems()
 
-            // Toast.makeText(this@MainActivity, name, Toast.LENGTH_SHORT).show()
+                name.setText("")
+                price.setText("")
+                url.setText("")
 
-            adapter = ItemAdapter(items)
-            itemsRv.adapter = adapter
-            itemsRv.layoutManager = LinearLayoutManager(this)
+                // Toast.makeText(this@MainActivity, name, Toast.LENGTH_SHORT).show()
+
+                adapter = ItemAdapter(items)
+                itemsRv.adapter = adapter
+                itemsRv.layoutManager = LinearLayoutManager(this)
+            }
         }
     }
 }
